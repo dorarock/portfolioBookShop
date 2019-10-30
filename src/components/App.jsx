@@ -1,15 +1,13 @@
 import React from 'react' ;
-import { connect } from 'react-redux';
-import { setBooks } from './actions/booksAction';
 import  axios  from 'axios';
-import  MaimMenu  from './components/Menu';
+import  MaimMenu  from './Menu';
 import { Container } from 'semantic-ui-react';
-import BookCard from './components/BookCard';
+import BookCard from './BookCard';
 import { Card } from 'semantic-ui-react'
-
+import Filter from '../containers/Filter';
 
 class App extends React.Component {
-  componentDidMount() {
+  componentDidMount()  {
     const { setBooks } = this.props;
     axios.get('http://localhost:3000/getProducts.json').then(({ data }) => {
       setBooks(data);
@@ -17,8 +15,8 @@ class App extends React.Component {
 };
 
   render() {
-    const { booksList, isReady } = this.props;
-    const item = booksList.map(book => (
+    const { books, isReady } = this.props;
+    const item = books.map((book) => (
       <>
       <BookCard {...book} />
       </>
@@ -28,6 +26,7 @@ class App extends React.Component {
       <>
       <Container>
           <MaimMenu />
+          <Filter />
           <Card.Group itemsPerRow={4}>
              {item}
         </Card.Group>
@@ -35,15 +34,8 @@ class App extends React.Component {
       </>
     );
   }
-}
+};
 
-const mapStateToProps = ({ books: {booksList} }) => ({
-  booksList,
-  isReady: booksList.isReady
-});
 
-const mapDispatchYoProps = dispatch => ({
-  setBooks: books => dispatch(setBooks(books))
-});
 
-export default connect(mapStateToProps, mapDispatchYoProps)(App);
+export default App;
