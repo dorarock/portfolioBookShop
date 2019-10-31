@@ -17,13 +17,21 @@ const sortBy = (books, filterBy) => {
     return filter(books, {'genre' : 'novel'});
     default:
     return books;
-
-  }
-  
+  }  
 };
 
-const mapStateToProps = ({ books }) => ({
-    books: sortBy(books.items, books.filterBy),
+const filterBooks = (books, searchQuery) =>
+ books.filter(o => 
+  o.product_name.toLowerCase().indexOf(searchQuery.toLowerCase()) >= 0 || 
+  o.autor.toLowerCase().indexOf(searchQuery.toLowerCase()) >= 0
+);
+
+const searchBooks = (books, filterBy, searchQuery) => {
+  return sortBy(filterBooks(books, searchQuery), filterBy);
+}
+
+const mapStateToProps = ({ books, filter }) => ({
+    books: searchBooks(books.items, filter.filterBy, filter.searchQuery),
     isReady: books.isReady
   });
   
