@@ -35,8 +35,8 @@ const mapStateToProps = ({ books, filter }) => ({
     isReady: books.isReady
   });
   
-const mapDispatchYoProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(booksActions, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchYoProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

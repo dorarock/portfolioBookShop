@@ -7,10 +7,10 @@ const mapStateToProps = ({ books, filter }) => ({
     filterBy: filter.filterBy,
   });
   
-const mapDispatchYoProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   ...bindActionCreators(filterActions, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchYoProps)(Filter);
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);
 
 

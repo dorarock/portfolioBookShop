@@ -1,7 +1,19 @@
 import React from 'react' ;
-import { Menu } from 'semantic-ui-react';
+import { Menu, Popup, Button, Image, List, CardContent } from 'semantic-ui-react';
 
-const MaimMenu = () => (
+const CartWindow = ({ product_name, id, img, removeFromCart }) => (
+  <List selection divided verticalAlign='middle'>
+    <List.Item>
+      <List.Content floated='right'>
+        <Button onClick={ removeFromCart.bind(this, id) } color="green">Удалить</Button>
+      </List.Content>
+      <Image avatar src={ img } />
+      <List.Content>{ product_name }</List.Content>
+    </List.Item>
+    </List>
+);
+
+const MaimMenu = ({ totalPrice, booksCount, items }) => (
     <Menu>
         <Menu.Item
           name='browse'
@@ -14,14 +26,22 @@ const MaimMenu = () => (
           <Menu.Item
             name='signup'
           >
-            Итого: &nbsp; <b>0</b> &nbsp; RUB.
+            Итого: &nbsp; <b>{ totalPrice }</b> &nbsp; RUB.
           </Menu.Item>
 
-          <Menu.Item
+
+          <Popup
+          trigger={
+            <Menu.Item
             name='help'
           >
-            Корзина (<b>0</b>)
+            Корзина (<b>{ booksCount }</b>)
           </Menu.Item>
+          }
+          content={ items.map(book => <CartWindow {...book} />) }
+          on="click"
+          hideOnScroll
+          />
         </Menu.Menu>
       </Menu>
 );

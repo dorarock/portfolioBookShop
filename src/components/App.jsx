@@ -1,10 +1,10 @@
 import React from 'react' ;
 import  axios  from 'axios';
-import  MaimMenu  from './Menu';
 import { Container } from 'semantic-ui-react';
-import BookCard from './BookCard';
+import BookCard from '../containers/BookCard';
 import { Card } from 'semantic-ui-react'
 import Filter from '../containers/Filter';
+import MaimMenu from '../containers/Menu';
 
 class App extends React.Component {
   componentDidMount()  {
@@ -16,11 +16,6 @@ class App extends React.Component {
 
   render() {
     const { books, isReady } = this.props;
-    const item = books.map((book) => (
-      <>
-      <BookCard {...book} />
-      </>
-    ))
     
     return (
       <>
@@ -28,7 +23,9 @@ class App extends React.Component {
           <MaimMenu />
           <Filter />
           <Card.Group itemsPerRow={4}>
-             {item}
+             {!isReady
+            ? 'Загрузка...'
+            : books.map((book, i) => <BookCard key={i} {...book} />)}
         </Card.Group>
       </Container>
       </>
